@@ -1,0 +1,20 @@
+{
+  "name": "backend_login_signup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chenath/Swift-Jobs-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chenath/Swift-Jobs-/issues"
+  },
+  "homepage": "https://github.com/Chenath/Swift-Jobs-#readme"
+}
