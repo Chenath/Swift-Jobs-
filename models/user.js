@@ -1,4 +1,4 @@
-const mongoose = require('Mongoose');
+const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -7,4 +7,3 @@ const UserSchema = mongoose.Schema({
     googleId: { type: String }, 
     createdAt: { type: Date, default: Date.now }
 })
-console.log('Hey')
