@@ -6,4 +6,6 @@ const UserSchema = mongoose.Schema({
     password: { type: String },
     googleId: { type: String }, 
     createdAt: { type: Date, default: Date.now }
-})
+});
+
+module.exports = mongoose.model('User', UserSchema);
