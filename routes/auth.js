@@ -1,24 +1,33 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/user.js"; // Add .js extension for ES modules
+
 const router = express.Router();
 
 // Signup Route
 router.post("/signup", async (req, res) => {
     try {
+        console.log("Received Data:", req.body);
+        
+
         const { username, email, password } = req.body;
+        console.log('hey')
         const existingUser = await User.findOne({ email });
-
+        console.log('hey')
         if (existingUser) return res.status(400).json({ message: "Email already registered" });
-
+        console.log('hey')
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('hey')
         const newUser = new User({ username, email, password: hashedPassword });
-
+        console.log('hey')
         await newUser.save();
+        console.log('hey')
+
         res.status(201).json({ message: "User registered successfully" });
 
     } catch (error) {
+        console.error("❌ Registration Error:", error);
         res.status(500).json({ message: "Server error", error });
     }
 });
@@ -43,4 +52,4 @@ router.post("/login", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router; // Use "export default" instead of "module.exports"

@@ -1,21 +1,22 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.js';
 
 // User Signup
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
         let user = await User.findOne({ $or: [{ email }, { username }] });
+        console.log('Hey')
         if (user) return res.status(400).json({ msg: 'User already exists' });
-
+        console.log('Hey')
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        console.log('Hey')
         user = new User({ username, email, password: hashedPassword });
         await user.save();
-
+        console.log('hey')
         res.status(201).json({ msg: 'User registered successfully' });
     } catch (error) {
         res.status(500).json({ msg: 'Server Error' });
@@ -23,7 +24,7 @@ const registerUser = async (req, res) => {
 };
 
 // User Login (Supports Username OR Email)
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     const { login, password } = req.body; // 'login' can be username or email
 
     try {
@@ -41,7 +42,7 @@ const loginUser = async (req, res) => {
 };
 
 // Google Authentication
-const googleAuth = async (req, res) => {
+export const googleAuth = async (req, res) => {
     const { googleId, name, email } = req.body;
 
     try {
@@ -58,5 +59,3 @@ const googleAuth = async (req, res) => {
         res.status(500).json({ msg: 'Server Error' });
     }
 };
-
-module.exports = { registerUser, loginUser, googleAuth };
