@@ -8,15 +8,15 @@ export const registerUser = async (req, res) => {
 
     try {
         let user = await User.findOne({ $or: [{ email }, { username }] });
-        console.log('Hey')
+        console.log('Hey 1')
         if (user) return res.status(400).json({ msg: 'User already exists' });
-        console.log('Hey')
+        console.log('Hey 2')
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        console.log('Hey')
+        console.log('Hey 3')
         user = new User({ username, email, password: hashedPassword });
         await user.save();
-        console.log('hey')
+        console.log('hey 4')
         res.status(201).json({ msg: 'User registered successfully' });
     } catch (error) {
         res.status(500).json({ msg: 'Server Error' });
