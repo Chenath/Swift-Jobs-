@@ -31,9 +31,10 @@ router.put("/:id", async (req, res) => {
 
         res.json({ message: "Profile updated successfully", user: updatedUser });
     } catch (error) {
-        console.error("Error updating profile:", error);
-        res.status(500).json({ message: "Server error" });
+        console.error("❌ Server Error:", error);  // Print full error details
+        res.status(500).json({ message: "Server error", error: error.message });
     }
+    
 });
 
 export default router;
