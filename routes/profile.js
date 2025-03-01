@@ -3,38 +3,43 @@ import User from "../models/user.js";
 
 const router = express.Router();
 
-// ✅ GET user profile
-router.get("/:id", async (req, res) => {
+// ✅ Get User Profile by Email
+router.get("/:email", async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const { email } = req.params;
+        const user = await User.findOne({ email });
+
         if (!user) return res.status(404).json({ message: "User not found" });
 
         res.json(user);
     } catch (error) {
-        console.error("Error fetching profile:", error);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Server error", error });
     }
 });
 
-// ✅ UPDATE user profile
-router.put("/:id", async (req, res) => {
+// ✅ Create or Update Profile
+router.post("/", async (req, res) => {
     try {
-        const { fullName, gender, dateOfBirth, phoneNumber } = req.body;
+        const { fullName, email, gender, dateOfBirth, phoneNumber } = req.body;
 
-        const updatedUser = await User.findByIdAndUpdate(
-            req.params.id,
-            { fullName, gender, dateOfBirth, phoneNumber },
-            { new: true } // Return updated user
-        );
+        let user = await User.findOne({ email });
 
-        if (!updatedUser) return res.status(404).json({ message: "User not found" });
+        if (user) {
+            // Update existing user
+            user.fullName = fullName;
+            user.gender = gender;
+            user.dateOfBirth = dateOfBirth;
+            user.phoneNumber = phoneNumber;
+        } else {
+            // Create new user
+            user = new User({ fullName, email, gender, dateOfBirth, phoneNumber });
+        }
 
-        res.json({ message: "Profile updated successfully", user: updatedUser });
+        await user.save();
+        res.status(200).json(user);
     } catch (error) {
-        console.error("❌ Server Error:", error);  // Print full error details
-        res.status(500).json({ message: "Server error", error: error.message });
+        res.status(500).json({ message: "Server error", error });
     }
-    
 });
 
 export default router;
