@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Chenath/Swift-Jobs-/issues"
   },
-  "homepage": "https://github.com/Chenath/Swift-Jobs-#readme"
+  "homepage": "https://github.com/Chenath/Swift-Jobs-#readme",
+  "dependencies": {
+    "react-native-vector-icons": "^10.2.0"
+  }
 }
